@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet">
+    <title>Simple real time chat application</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-4">Real time chat application</h1>
+    <div id="chat" class="border rounded p-3 mb-3" style="height: 300px; overflow-y: auto">
+
+    </div>
+    <div class="input-group mb-1">
+        <input id="senderInput" type="text" class="form-control"  placeholder="Your name..." />
+    </div>
+    <div class="input-group mb-3">
+        <input id="messageInput" type="text" class="form-control"  placeholder="Type a message..." />
+        <div class="input-group-append">
+            <button id="sendMessage" class="btn btn-primary">Send</button>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
