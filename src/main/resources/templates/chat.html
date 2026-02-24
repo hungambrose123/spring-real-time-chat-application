@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.2.0/bundles/stomp.umd.min.js"></script>
     <title>Simple real time chat application</title>
 </head>
 <body>
@@ -23,6 +25,40 @@
     </div>
 
 </div>
-
 </body>
+<script>
+    function setConnected(connected){
+        document.querySelector("#sendMessage").disabled = !connected;
+    }
+
+    function connect(){
+        let socket = new SockJS('/chat');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame){
+            setConnected(true);
+            stompClient.subscribe('/topic/messages', function (message) {
+                showMessage(JSON.parse(message.body));
+            })
+        })
+
+        function showMessage(message){
+            let chat = document.querySelector("#chat");
+            let messageElement = document.createElement("div");
+            messageElement.textContent = message.sender + ": " + message.content;
+            messageElement.class = "border-bottom mb-1";
+            chat.appendChild(messageElement);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function sendMessage(){
+            let sender = document.querySelector("#senderInput").value;
+            let content = document.querySelector("#messageInput").value;
+            let chatMessage = {
+                sender,
+                content,
+            }
+            stompClient.send("app/sendMessage", {}, JSON.stringify(chatMessage))
+        }
+    }
+</script>
 </html>
