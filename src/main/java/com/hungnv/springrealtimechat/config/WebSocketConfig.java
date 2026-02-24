@@ -10,13 +10,10 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    @Value("${frontend_uri}")
-    private String frontend_uri;
-
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat")
-                .setAllowedOrigins(frontend_uri)
+                .setAllowedOrigins("http://localhost:8080")
                 .withSockJS();
     }
 
